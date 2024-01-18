@@ -18,12 +18,12 @@ async function run() {
     },
   });
   if (!config) {
-    log.error("No config found.");
+    log.error("[git-sync] No config found. Pass");
     process.exit();
   }
   if (!config.url || config.url.length === 0) {
-    log.error("No url found.");
-    process.exit();
+    log.error("[git-sync] No url found.");
+    process.exit(1);
   }
   log.message("[git-sync: start]");
   log.success("Config loaded.");
@@ -46,11 +46,16 @@ async function run() {
   } catch (e) {
     // already exits, ignore
   }
+  const remote = await git.remote(["-v"]) || "";
   for (const url of config.url) {
     try {
+      const regex = new RegExp(`^${config.remoteName}\\s+${url}`);
+      if (regex.test(remote)) {
+        continue;
+      }
       await git.remote(["set-url", "--add", config.remoteName!, url]);
     } catch (e) {
-      // already exits, ignore
+      // ignore
     }
   }
   console.log("git remote -v");
