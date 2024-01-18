@@ -1,7 +1,6 @@
 import { resolve } from "node:path";
 import { loadConfig } from "c12";
 import simpleGit from "simple-git";
-import {} from "chalk";
 import { resolvePath } from "@bernankez/utils/node";
 import { log } from "./log";
 import type { GitSyncConfig } from ".";
@@ -11,6 +10,8 @@ const { __dirname } = resolvePath(import.meta.url);
 async function run() {
   const { config } = await loadConfig<GitSyncConfig>({
     name: "gitsync",
+    // TODO defaults to process.cwd()
+    // pass from cli
     cwd: resolve(__dirname, "..", "fixtures"),
     defaultConfig: {
       remoteName: "origin",
@@ -36,6 +37,8 @@ async function run() {
       });
     }
   }
+  // TODO set cwd
+  // pass from cli or config file
   const git = simpleGit();
   await git.init();
   try {
@@ -50,6 +53,8 @@ async function run() {
       // already exits, ignore
     }
   }
+  console.log("git remote -v");
+  console.log(await git.remote(["-v"]));
   log.message("[git-sync: complete]");
 }
 
