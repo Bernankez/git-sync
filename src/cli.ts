@@ -49,7 +49,7 @@ async function run() {
   const remote = await git.remote(["-v"]) || "";
   for (const url of config.url) {
     try {
-      const regex = new RegExp(`^${config.remoteName}\\s+${url}`);
+      const regex = new RegExp(`^${config.remoteName}\\s+${url}`, "m");
       if (regex.test(remote)) {
         continue;
       }
