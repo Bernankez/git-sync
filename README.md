@@ -1,5 +1,9 @@
 # git-sync
 
+[![npm](https://img.shields.io/npm/v/@bernankez/git-sync?color=red&label=npm)](https://www.npmjs.com/package/@bernankez/git-sync)
+[![CI](https://github.com/Bernankez/git-sync/workflows/CI/badge.svg)](https://github.com/Bernankez/git-sync/actions)
+[![LICENSE](https://shields.io/github/license/Bernankez/git-sync)](https://github.com/Bernankez/git-sync/blob/master/LICENSE)
+
 Auto sync repos when pushing to git.
 
 ## Install
