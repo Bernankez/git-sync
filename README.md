@@ -1,34 +1,80 @@
-<p align="center">
-  <strong>📦 git-sync</strong><br><br>
-  Starter template for library using unbuild<br>
-</p>
+# git-sync
 
-### 🪄 Automated config
+Auto sync repos when pushing to git.
 
-Automagically infer build config and entries from package.json. Powered by [unbuild](https://github.com/unjs/unbuild).
+## Install
 
-### ✨ Passive watcher
+`git-sync` should be installed in your project instead of globally. 
 
-Stub `dist` once using [unbuild](https://github.com/unjs/unbuild) or continuously
-monitor file changes using [tsx](https://github.com/esbuild-kit/tsx).
+```sh
+$ npm i -D @bernankez/git-sync
+```
 
-### 🚀 Blazing fast Unit Test framework
+## Usage
 
-Integration with [Vitest](https://vitest.dev/).
+1. Create a config file named `gitsync.config.ts` or `gitsync.config.js` in the root of your project. For example
 
-### 🪝 Lightweight git hooks
+gitsync.config.ts
+```ts
+import { defineConfig } from "@bernankez/git-sync";
 
-Easily manage git hooks with [simple-git-hooks](https://github.com/toplenboren/simple-git-hooks).
+export default defineConfig({
+  remoteName: "origin",
+  url: ["git@github.com:Bernankez/git-sync.git", "git@github.com:Bernankez/example.git"]
+});
+```
 
-### 🏄 Interactively bump version number
+2. Run the CLI to update git config
 
-Introducing by [bumpp](https://github.com/antfu/bumpp).
+```sh
+$ npx git-sync
+```
 
-### 🚗 Automated changelog
+3. You can also add the CLI to your `package.json`, so it can automatically run after `npm install` 
 
-Automatically generate changelog by [changelogithub](https://github.com/antfu/changelogithub).
+```json
+{
+  "scripts": {
+    "prepare": "git-sync"
+  }
+}
+```
 
-### Getting Started
+## Configuration
 
-- [ ] Set your Action secret via [GitHub](https://github.com/Bernankez/git-sync/settings/secrets/actions). Secret name is `TOKEN`. [Learn more about encrypted secrets.](https://docs.github.com/en/actions/security-guides/encrypted-secrets)
-- [ ] Check and supplement the additional information in `package.json`
+### CLI
+
+#### --config \<path\>
+
+Specific where you want to read the config file from.
+
+#### --git \<path\>
+
+Specific git base dir.
+
+### Configuration file
+
+#### remoteName
+
+Remote name, defaults to origin.
+
+#### fetch
+
+If remoteName is not added, fetch will be used as the parameter when adding remote.
+
+#### url
+
+Git urls that you want to push to.
+
+#### gitBaseDir
+
+Same as `--git` in CLI. `--git` has higher priority than `gitBaseDir`.
+
+## What's behind
+
+```sh
+git init
+git remote add <config.remoteName> <config.fetch>
+git remote set-url -add <config.remoteName> <config.url>
+git remote -v
+```
