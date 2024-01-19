@@ -18,7 +18,7 @@ function run() {
     .help()
     .version(version);
   const { options } = cli.parse();
-  gitSync({ cwd: options.cwd, gitBaseDir: options.gitBaseDir });
+  gitSync({ cwd: options.config, gitBaseDir: options.gitBaseDir });
 }
 
 async function gitSync(options: GitSyncOptions) {
@@ -31,11 +31,11 @@ async function gitSync(options: GitSyncOptions) {
     },
   });
   if (!config) {
-    log.error("[git-sync] No config found. Pass");
+    log.error("[git-sync] No config found. Skipped");
     process.exit();
   }
   if (!config.url || config.url.length === 0) {
-    log.error("[git-sync] No url found.");
+    log.error("[git-sync] No url found. Please refer to https://github.com/Bernankez/git-sync?tab=readme-ov-file#configuration-file for config details");
     process.exit(1);
   }
   log.message("[git-sync: start]");

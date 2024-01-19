@@ -5,9 +5,6 @@ export default defineBuildConfig({
     "src/index",
     "src/cli",
   ],
-  // TODO export only one declaration file
-  // export cli file
-  // set bin
   declaration: true,
   clean: true,
 });
