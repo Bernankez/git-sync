@@ -66,4 +66,8 @@ async function gitSync(options: GitSyncOptions) {
   log.message("[git-sync: complete]");
 }
 
+if (process.env.CI) {
+  log.message("[git-sync] skip in CI");
+  process.exit();
+}
 run();
