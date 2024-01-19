@@ -1,18 +1,31 @@
 import { resolve } from "node:path";
 import { loadConfig } from "c12";
 import simpleGit from "simple-git";
-import { resolvePath } from "@bernankez/utils/node";
+import { cac } from "cac";
+import { version } from "../package.json";
 import { log } from "./log";
 import type { GitSyncConfig } from ".";
 
-const { __dirname } = resolvePath(import.meta.url);
+interface GitSyncOptions {
+  cwd?: string;
+  gitBaseDir?: string;
+}
 
-async function run() {
+function run() {
+  const cli = cac("git-sync");
+  cli.option("--config <path>", "git-sync config path")
+    .option("--git <path>", "Git base dir")
+    .help()
+    .version(version);
+  const { options } = cli.parse();
+  gitSync({ cwd: options.cwd, gitBaseDir: options.gitBaseDir });
+}
+
+async function gitSync(options: GitSyncOptions) {
+  const cwd = typeof options.cwd === "string" ? resolve(process.cwd(), options.cwd) : process.cwd();
   const { config } = await loadConfig<GitSyncConfig>({
     name: "gitsync",
-    // TODO defaults to process.cwd()
-    // pass from cli
-    cwd: resolve(__dirname, "..", "fixtures"),
+    cwd,
     defaultConfig: {
       remoteName: "origin",
     },
@@ -26,16 +39,19 @@ async function run() {
     process.exit(1);
   }
   log.message("[git-sync: start]");
-  // TODO set cwd
-  // pass from cli or config file
-  const git = simpleGit();
+  const gitBaseDir = typeof options.gitBaseDir === "string"
+    ? resolve(process.cwd(), options.gitBaseDir)
+    : config.gitBaseDir
+      ? resolve(process.cwd(), config.gitBaseDir)
+      : process.cwd();
+  const git = simpleGit({
+    baseDir: gitBaseDir,
+  });
   await git.init();
   if (config.fetch) {
-    try {
-      await git.addRemote(config.remoteName!, config.fetch);
-    } catch (e) {
+    await git.addRemote(config.remoteName!, config.fetch).catch(() => {
       // remote exits, ignore
-    }
+    });
   }
   const remote = await git.remote(["-v"]) || "";
   for (const url of config.url) {

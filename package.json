@@ -55,8 +55,8 @@
     "fix": "eslint . --fix"
   },
   "dependencies": {
-    "@bernankez/utils": "^0.4.1",
     "c12": "^1.6.1",
+    "cac": "^6.7.14",
     "chalk": "^5.3.0",
     "simple-git": "^3.22.0"
   },
