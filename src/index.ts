@@ -1,9 +1,9 @@
 export interface GitSyncConfig {
-  /** remote name, defaults to origin */
+  /** Remote name, defaults to origin */
   remoteName?: string;
-  /** this will set to origin url if git not init. If not set, will use the first item in url */
+  /** If remoteName is not added, fetch will be used as the parameter when adding remote  */
   fetch?: string;
-  /** git urls that you want to push to */
+  /** Git urls that you want to push to */
   url?: string[];
 }
 
