@@ -78,3 +78,7 @@ git remote add <config.remoteName> <config.fetch>
 git remote set-url -add <config.remoteName> <config.url>
 git remote -v
 ```
+
+## License
+
+[MIT](LICENSE) License © [科科Cole](https://github.com/Bernankez)
