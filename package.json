@@ -1,7 +1,7 @@
 {
   "name": "@bernankez/git-sync",
   "type": "module",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "packageManager": "pnpm@8.14.1",
   "description": "Auto sync repos when pushing to git",
   "author": {
