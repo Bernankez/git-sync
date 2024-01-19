@@ -26,25 +26,16 @@ async function run() {
     process.exit(1);
   }
   log.message("[git-sync: start]");
-  log.success("Config loaded.");
-  for (const prop in config) {
-    const value = config[prop as keyof GitSyncConfig];
-    if (typeof value === "string") {
-      log.info(`${prop}: ${value}`);
-    } else if (Array.isArray(value)) {
-      value.forEach((v) => {
-        log.info(`${prop}: ${v}`);
-      });
-    }
-  }
   // TODO set cwd
   // pass from cli or config file
   const git = simpleGit();
   await git.init();
-  try {
-    await git.addRemote(config.remoteName!, config.fetch || config.url[0]);
-  } catch (e) {
-    // already exits, ignore
+  if (config.fetch) {
+    try {
+      await git.addRemote(config.remoteName!, config.fetch);
+    } catch (e) {
+      // remote exits, ignore
+    }
   }
   const remote = await git.remote(["-v"]) || "";
   for (const url of config.url) {
