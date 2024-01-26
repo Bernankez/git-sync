@@ -44,6 +44,9 @@ $ npx git-sync
 }
 ```
 
+> [!NOTE]
+> If you accidentally set the wrong git url and it has been added to your git, please go to the `[project root dir]/.git` and remove the line `url = [your incorrect git url]` in the `config` file.
+
 ## Configuration
 
 ### CLI
