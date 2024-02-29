@@ -82,7 +82,7 @@ Same as `--git` in CLI. `--git` has higher priority than `gitBaseDir`.
 ```sh
 git init
 git remote add <config.remoteName> <config.fetch>
-git remote set-url -add <config.remoteName> <config.url>
+git remote set-url --add <config.remoteName> <config.url>
 git remote -v
 ```
 
