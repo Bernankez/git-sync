@@ -8,7 +8,7 @@ Auto sync repos when pushing to git.
 
 ## Install
 
-`git-sync` should be installed in your project instead of globally. 
+`git-sync` should be installed in your project instead of globally.
 
 ```sh
 $ npm i -D @bernankez/git-sync
@@ -34,7 +34,7 @@ export default defineConfig({
 $ npx git-sync
 ```
 
-3. You can also add the CLI to your `package.json`, so it can automatically run after `npm install` 
+3. You can also add the CLI to your `package.json`, so it can automatically run after `npm install`
 
 ```json
 {

@@ -1,4 +1,5 @@
 import { resolve } from "node:path";
+import process from "node:process";
 import { loadConfig } from "c12";
 import simpleGit from "simple-git";
 import { cac } from "cac";
