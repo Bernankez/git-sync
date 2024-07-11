@@ -54,6 +54,7 @@
     "c12": "^1.11.1",
     "cac": "^6.7.14",
     "chalk": "^5.3.0",
+    "ci-info": "^4.0.0",
     "simple-git": "^3.25.0"
   },
   "devDependencies": {

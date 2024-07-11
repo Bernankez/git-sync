@@ -3,6 +3,7 @@ import process from "node:process";
 import { loadConfig } from "c12";
 import simpleGit from "simple-git";
 import { cac } from "cac";
+import ci from "ci-info";
 import { version } from "../package.json";
 import { log } from "./log";
 import type { GitSyncConfig } from ".";
@@ -67,7 +68,7 @@ async function gitSync(options: GitSyncOptions) {
   log.message("[git-sync: complete]");
 }
 
-if (process.env.CI) {
+if (ci.isCI) {
   log.message("[git-sync] skip in CI");
   process.exit();
 }
